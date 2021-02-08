@@ -15,6 +15,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import javax.swing.UIManager;
 import java.awt.SystemColor;
@@ -46,10 +48,9 @@ public class Calculator extends JFrame {
 	}
 
 	public void addinput(String str) {
-		
-			input.setText(input.getText() + str); 
-		
-		
+
+		input.setText(input.getText() + str);
+
 	}
 
 	public void hesapla() {
@@ -103,6 +104,8 @@ public class Calculator extends JFrame {
 		screen.setLayout(null);
 
 		input = new JTextField();
+		input.setEditable(false);
+		input.setForeground(Color.BLACK);
 		input.setHorizontalAlignment(SwingConstants.RIGHT);
 		input.setFont(new Font("Tahoma", Font.BOLD, 23));
 		input.setBounds(0, 22, 364, 38);
@@ -110,6 +113,7 @@ public class Calculator extends JFrame {
 		input.setColumns(10);
 
 		JLabel lbl = new JLabel("");
+		lbl.setEnabled(false);
 		lbl.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		lbl.setBounds(0, 0, 364, 20);
@@ -145,6 +149,7 @@ public class Calculator extends JFrame {
 		btnNewButton_2.setBounds(0, 0, 91, 69);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				double result = 1 / Double.parseDouble(input.getText());
 				input.setText(Double.toString(result));
 			}
@@ -159,16 +164,13 @@ public class Calculator extends JFrame {
 		btnNewButton_2_1_1_1.setBounds(91, 0, 91, 69);
 		btnNewButton_2_1_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					double n = Double.parseDouble(input.getText());
-					double result = 1;
-					for (int i = 2; i <= n; i++) {
-						result *= i;
-					}
-					input.setText(Double.toString(result));
-				} catch (NumberFormatException ex) {
-					input.setText("Sadece sayı giriniz!");
+
+				double n = Double.parseDouble(input.getText());
+				double result = 1;
+				for (int i = 2; i <= n; i++) {
+					result *= i;
 				}
+				input.setText(Double.toString(result));
 
 			}
 		});
@@ -208,7 +210,7 @@ public class Calculator extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				double result = Math.pow(Double.parseDouble(input.getText()), 2);
 				input.setText(Double.toString(result));
-				
+
 			}
 		});
 		control.add(btnNewButton_2_1_1);
@@ -231,11 +233,15 @@ public class Calculator extends JFrame {
 		btnNewButton_3.setForeground(Color.WHITE);
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				number = Double.parseDouble(input.getText());
-				operation = 5;
-				input.setText("");
-				lbl.setText(number + e.getActionCommand());
-				minuspos = 1;
+				try {
+					number = Double.parseDouble(input.getText());
+					operation = 5;
+					input.setText("");
+					lbl.setText(number + e.getActionCommand());
+					minuspos = 1;
+				} catch (NumberFormatException ex) {
+					System.out.println("Please enter only number");
+				}
 			}
 		});
 		btnNewButton_3.setBounds(182, 69, 91, 69);
@@ -415,7 +421,7 @@ public class Calculator extends JFrame {
 		btnNewButton_3_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnNewButton_3_1_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(! input.getText().contains(".")) {
+				if (!input.getText().contains(".")) {
 					addinput(".");
 				}
 			}
@@ -447,7 +453,7 @@ public class Calculator extends JFrame {
 		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 23));
 		btnNewButton_4.setBounds(273, 345, 91, 69);
 		control.add(btnNewButton_4);
-		
+
 		JButton btnNewButton_5 = new JButton("+/-");
 		btnNewButton_5.setBackground(Color.DARK_GRAY);
 		btnNewButton_5.setForeground(Color.WHITE);
@@ -455,7 +461,7 @@ public class Calculator extends JFrame {
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				minuspos *= -1;
-				if(minuspos == -1) {
+				if (minuspos == -1) {
 					input.setText("-");
 				}
 			}
